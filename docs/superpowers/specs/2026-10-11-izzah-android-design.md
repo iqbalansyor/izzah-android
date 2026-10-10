@@ -43,7 +43,7 @@ The stack mirrors the owner's sibling apps (`~/Documents/project/shaum-tracker`,
 | DI | Koin 4 (`koinViewModel()`) |
 | Nav | type-safe Navigation Compose (`@Serializable` route objects) |
 | Persistence | Room 2.6 on **SQLCipher** (`net.zetetic:sqlcipher-android`), settings in Preferences DataStore |
-| Time | `kotlinx.datetime` for domain math; `java.time.format` + `android.icu` for locale formatting and Hijri |
+| Time | `kotlinx.datetime` for domain math; `java.time.format` + `java.time.chrono.HijrahDate` for locale formatting and Hijri |
 | Prayer times | `com.batoulapps.adhan:adhan` (Java, offline). If that artifact can't be resolved, use `adhan2`. |
 | Tests | JUnit5 + AssertK + Turbine + `kotlinx-coroutines-test` (unit); Compose UI test (instrumented smoke) |
 | Lib versions | start from `~/Documents/project/lockin/gradle/libs.versions.toml`; add appcompat 1.7.x, biometric 1.1.x, datastore-preferences 1.1.x, sqlcipher-android 4.6.x, androidx.sqlite 2.4.x, adhan, lifecycle-process |
@@ -70,7 +70,7 @@ Manual verification always runs on the **`Pixel_9_2`** AVD (API 36). If `Pixel_9
   - ID: `Selasa`, `04.12`, `21.30`.
   - EN: `Tuesday`, `4:12 AM`, `9:30 PM`.
   - Never hardcode a time string.
-- Hijri date: `android.icu.util.IslamicCalendar` with `CalculationType.ISLAMIC_UMALQURA`. Month names come from `hijri_month_1..12`. Formatted via `hijri_suffix` (`13 Rabiul Akhir 1448 H` / `13 Rabi‘ al-Thani 1448 AH`).
+- Hijri date: `java.time.chrono.HijrahDate.from(localDate)`. This is the JDK's Umm al-Qura chronology; it exists on API 26+ and runs in JVM unit tests. Month names come from `hijri_month_1..12`. Formatted via `hijri_suffix` (`2 Jumadil Awal 1448 H` / `2 Jumada al-Ula 1448 AH` for 2026-10-13). The prototype's "13 Rabiul Akhir 1448 H" is mock text and is not correct for that date.
 
 ## 5. Visual system
 
