@@ -1,0 +1,207 @@
+[
+{
+"label": "Banda Aceh",
+"lat": 5.5483,
+"lng": 95.3238
+},
+{
+"label": "Medan",
+"lat": 3.5952,
+"lng": 98.6722
+},
+{
+"label": "Padang",
+"lat": -0.9471,
+"lng": 100.4172
+},
+{
+"label": "Pekanbaru",
+"lat": 0.5071,
+"lng": 101.4478
+},
+{
+"label": "Tanjung Pinang",
+"lat": 0.9186,
+"lng": 104.4586
+},
+{
+"label": "Jambi",
+"lat": -1.6101,
+"lng": 103.6131
+},
+{
+"label": "Palembang",
+"lat": -2.9761,
+"lng": 104.7754
+},
+{
+"label": "Pangkal Pinang",
+"lat": -2.1316,
+"lng": 106.1169
+},
+{
+"label": "Bengkulu",
+"lat": -3.8004,
+"lng": 102.2655
+},
+{
+"label": "Bandar Lampung",
+"lat": -5.4292,
+"lng": 105.261
+},
+{
+"label": "Jakarta",
+"lat": -6.2088,
+"lng": 106.8456
+},
+{
+"label": "Bandung",
+"lat": -6.9175,
+"lng": 107.6191
+},
+{
+"label": "Serang",
+"lat": -6.1201,
+"lng": 106.1503
+},
+{
+"label": "Semarang",
+"lat": -6.9667,
+"lng": 110.4167
+},
+{
+"label": "Yogyakarta",
+"lat": -7.7956,
+"lng": 110.3695
+},
+{
+"label": "Surabaya",
+"lat": -7.2575,
+"lng": 112.7521
+},
+{
+"label": "Denpasar",
+"lat": -8.6705,
+"lng": 115.2126
+},
+{
+"label": "Mataram",
+"lat": -8.5833,
+"lng": 116.1167
+},
+{
+"label": "Kupang",
+"lat": -10.1772,
+"lng": 123.607
+},
+{
+"label": "Pontianak",
+"lat": -0.0263,
+"lng": 109.3425
+},
+{
+"label": "Palangka Raya",
+"lat": -2.2161,
+"lng": 113.9135
+},
+{
+"label": "Banjarmasin",
+"lat": -3.3194,
+"lng": 114.5908
+},
+{
+"label": "Samarinda",
+"lat": -0.5022,
+"lng": 117.1537
+},
+{
+"label": "Tanjung Selor",
+"lat": 2.8379,
+"lng": 117.3659
+},
+{
+"label": "Manado",
+"lat": 1.4748,
+"lng": 124.8421
+},
+{
+"label": "Gorontalo",
+"lat": 0.5435,
+"lng": 123.0568
+},
+{
+"label": "Palu",
+"lat": -0.8917,
+"lng": 119.8707
+},
+{
+"label": "Mamuju",
+"lat": -2.6748,
+"lng": 118.8886
+},
+{
+"label": "Makassar",
+"lat": -5.1477,
+"lng": 119.4327
+},
+{
+"label": "Kendari",
+"lat": -3.9985,
+"lng": 122.513
+},
+{
+"label": "Ambon",
+"lat": -3.6954,
+"lng": 128.1814
+},
+{
+"label": "Sofifi",
+"lat": 0.737,
+"lng": 127.57
+},
+{
+"label": "Jayapura",
+"lat": -2.5337,
+"lng": 140.7181
+},
+{
+"label": "Manokwari",
+"lat": -0.8615,
+"lng": 134.062
+},
+{
+"label": "Nabire",
+"lat": -3.3667,
+"lng": 135.4833
+},
+{
+"label": "Wamena",
+"lat": -4.095,
+"lng": 138.95
+},
+{
+"label": "Merauke",
+"lat": -8.4932,
+"lng": 140.4018
+},
+{
+"label": "Sorong",
+"lat": -0.8762,
+"lng": 131.2558
+},
+{
+"label": "Kuala Lumpur",
+"lat": 3.139,
+"lng": 101.6869
+},
+{
+"label": "Singapore",
+"lat": 1.3521,
+"lng": 103.8198
+},
+{
+"label": "Bandar Seri Begawan",
+"lat": 4.9031,
+"lng": 114.9398
+}
+]
