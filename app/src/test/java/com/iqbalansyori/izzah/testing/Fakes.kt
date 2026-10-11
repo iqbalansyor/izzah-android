@@ -66,7 +66,10 @@ class FakePrayerTimesRepository(times: Map<com.iqbalansyori.izzah.domain.model.P
     val timesFlow = MutableStateFlow(times)
     override fun observeToday(): Flow<Map<com.iqbalansyori.izzah.domain.model.Prayer, kotlinx.datetime.LocalTime>?> = timesFlow
     override fun timesFor(date: LocalDate) = timesFlow.value
-    override suspend fun setLocation(p: com.iqbalansyori.izzah.domain.model.GeoPoint) = Unit
+    var lastLocation: com.iqbalansyori.izzah.domain.model.GeoPoint? = null
+    override suspend fun setLocation(p: com.iqbalansyori.izzah.domain.model.GeoPoint) {
+        lastLocation = p
+    }
 }
 
 class FakeJedaRepository(events: List<com.iqbalansyori.izzah.domain.model.JedaEvent> = emptyList()) :

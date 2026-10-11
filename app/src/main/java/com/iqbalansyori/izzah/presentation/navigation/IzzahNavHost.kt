@@ -26,6 +26,7 @@ import com.iqbalansyori.izzah.presentation.home.HomeNav
 import com.iqbalansyori.izzah.presentation.home.HomeRoot
 import com.iqbalansyori.izzah.presentation.jeda.JedaRoot
 import com.iqbalansyori.izzah.presentation.progress.ProgressRoot
+import com.iqbalansyori.izzah.presentation.sholat.SholatRoot
 import com.iqbalansyori.izzah.presentation.splash.SplashScreen
 import com.iqbalansyori.izzah.presentation.welcome.WelcomeScreen
 import com.iqbalansyori.izzah.presentation.unlock.UnlockRoot
@@ -112,7 +113,7 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
                 }
             }
         }
-        stub<SholatRoute>("Sholat")
+        composable<SholatRoute> { SholatRoot(onBack = { nav.popBackStack() }) }
         stub<DzikirRoute>("Dzikir")
         stub<DoaRoute>("Doa")
         stub<JurnalRoute>("Jurnal")

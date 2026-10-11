@@ -8,6 +8,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.iqbalansyori.izzah.data.db.IzzahDatabase
 import com.iqbalansyori.izzah.data.locale.LocaleFormats
 import com.iqbalansyori.izzah.data.prayer.CityCatalog
+import com.iqbalansyori.izzah.data.prayer.LocationProvider
 import com.iqbalansyori.izzah.data.prayer.PrayerTimesRepositoryImpl
 import com.iqbalansyori.izzah.data.repository.DayLogStoreImpl
 import com.iqbalansyori.izzah.data.repository.JedaRepositoryImpl
@@ -44,6 +45,7 @@ val dataModule = module {
     single<JourneyRepository> { JourneyRepositoryImpl(get(), get(), get(), get()) }
     single<JedaRepository> { JedaRepositoryImpl(get(), get()) }
     single<PrayerTimesRepository> { PrayerTimesRepositoryImpl(get(), get(), get()) }
+    single { LocationProvider(androidContext()) }
     single { CityCatalog(androidContext().assets.open("cities.json").bufferedReader().use { it.readText() }) }
     single { LocaleFormats { AppCompatDelegate.getApplicationLocales()[0] ?: Locale.getDefault() } }
 }
