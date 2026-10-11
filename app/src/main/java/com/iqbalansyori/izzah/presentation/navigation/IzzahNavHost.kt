@@ -22,6 +22,8 @@ import com.iqbalansyori.izzah.data.lock.AppLockManager
 import com.iqbalansyori.izzah.designsystem.theme.IzzahColors
 import com.iqbalansyori.izzah.domain.repository.SettingsRepository
 import com.iqbalansyori.izzah.designsystem.component.TabDest
+import com.iqbalansyori.izzah.presentation.doa.DoaScreen
+import com.iqbalansyori.izzah.presentation.dzikir.DzikirRoot
 import com.iqbalansyori.izzah.presentation.home.HomeNav
 import com.iqbalansyori.izzah.presentation.home.HomeRoot
 import com.iqbalansyori.izzah.presentation.jeda.JedaRoot
@@ -114,8 +116,8 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
             }
         }
         composable<SholatRoute> { SholatRoot(onBack = { nav.popBackStack() }) }
-        stub<DzikirRoute>("Dzikir")
-        stub<DoaRoute>("Doa")
+        composable<DzikirRoute> { DzikirRoot(onBack = { nav.popBackStack() }) }
+        composable<DoaRoute> { DoaScreen(onBack = { nav.popBackStack() }) }
         stub<JurnalRoute>("Jurnal")
         stub<DisguiseRoute>("Disguise")
         stub<DataRoute>("Data")

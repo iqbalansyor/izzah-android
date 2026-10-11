@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
 import com.iqbalansyori.izzah.data.prayer.CityCatalog
+import com.iqbalansyori.izzah.presentation.dzikir.DzikirViewModel
 import com.iqbalansyori.izzah.presentation.home.HomeViewModel
 import com.iqbalansyori.izzah.presentation.jeda.JedaViewModel
 import com.iqbalansyori.izzah.presentation.onboarding.OnboardingViewModel
@@ -20,6 +21,7 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get(), get(), get(), get()) }
     viewModel { ProgressViewModel(get(), get(), get(), get(), get()) }
     viewModel { JedaViewModel(get(), get()) }
+    viewModel { DzikirViewModel() }
     viewModel { SholatViewModel(get(), get(), get(), get<CityCatalog>().cities, get()) }
     viewModel {
         val context = androidContext()
