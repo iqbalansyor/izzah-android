@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -88,7 +89,10 @@ fun DayBars(bars: List<Bar>, selectedIndex: Int?, onTap: (Int) -> Unit, modifier
                         .then(if (clickable) Modifier.clickable(role = Role.Button) { onTap(i) } else Modifier),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Box(Modifier.width(14.dp).height(bar.heightDp.dp).barPaint(bar.kind, selectedIndex == i, 14.dp, bar.heightDp.dp))
+                    Box(
+                        Modifier.width(14.dp).height(bar.heightDp.dp).barPaint(bar.kind, selectedIndex == i, 14.dp, bar.heightDp.dp)
+                            .then(if (bar.kind == BarKind.TODAY) Modifier.testTag("todayBar") else Modifier),
+                    )
                     if (bar.kind == BarKind.TODAY) {
                         Icon(IzzahGlyphs.Star, null, Modifier.size(10.dp).offset(y = -(bar.heightDp / 2 - 9).dp), tint = IzzahColors.Bg)
                     }
