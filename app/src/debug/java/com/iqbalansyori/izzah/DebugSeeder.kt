@@ -10,6 +10,9 @@ import com.iqbalansyori.izzah.data.db.entities.DayLogEntity
 import com.iqbalansyori.izzah.data.db.entities.JedaEntity
 import com.iqbalansyori.izzah.data.db.entities.JournalEntity
 import com.iqbalansyori.izzah.data.db.toMask
+import com.iqbalansyori.izzah.data.notify.AlarmReminderScheduler
+import com.iqbalansyori.izzah.data.notify.PlannedReminder
+import com.iqbalansyori.izzah.data.notify.ReminderKind
 import com.iqbalansyori.izzah.domain.TimeSource
 import com.iqbalansyori.izzah.domain.model.Prayer
 import com.iqbalansyori.izzah.domain.repository.SettingsRepository
@@ -24,6 +27,7 @@ import kotlinx.datetime.LocalTime
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -34,16 +38,24 @@ class DebugSeeder : BroadcastReceiver(), KoinComponent {
     private val jeda: JedaDao by inject()
     private val settings: SettingsRepository by inject()
     private val time: TimeSource by inject()
+    private val scheduler: AlarmReminderScheduler by inject()
 
     override fun onReceive(context: Context, intent: Intent) {
         val pending = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                seed()
+                if (intent.action == "com.iqbalansyori.izzah.REMIND_TEST") remindTest(intent.getStringExtra("kind") ?: "CHECKIN") else seed()
             } finally {
                 pending.finish()
             }
         }
+    }
+
+    // adb shell am broadcast -a com.iqbalansyori.izzah.REMIND_TEST -p com.iqbalansyori.izzah --es kind PRAYER|DZIKIR_EVENING|CHECKIN
+    private fun remindTest(kindName: String) {
+        val kind = ReminderKind.valueOf(kindName)
+        val at = kotlinx.datetime.Clock.System.now().plus(10, DateTimeUnit.SECOND).toLocalDateTime(time.zone)
+        scheduler.schedule(PlannedReminder(kind, if (kind == ReminderKind.PRAYER) Prayer.ASR else null, at, 900))
     }
 
     // the prototype's 45-day model: slips on days 9/21/38, 3..5 prayers, a journal entry unless i % 5 == 0

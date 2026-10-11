@@ -5,6 +5,10 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.iqbalansyori.izzah.data.lock.AppLockManager
+import com.iqbalansyori.izzah.data.notify.NotificationChannels
+import com.iqbalansyori.izzah.domain.repository.ReminderScheduler
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import com.iqbalansyori.izzah.di.appModule
 import com.iqbalansyori.izzah.di.dataModule
 import com.iqbalansyori.izzah.di.viewModelModule
@@ -23,9 +27,15 @@ class IzzahApp : Application() {
             androidContext(this@IzzahApp)
             modules(appModule, dataModule, viewModelModule)
         }
+        NotificationChannels.create(this)
         val lock = get<AppLockManager>()
         val settings = get<SettingsRepository>()
         val scope = get<CoroutineScope>()
+        val reminders = get<ReminderScheduler>()
+        // reminders depend on the toggles and the location, so any change (and the first emission at start) replans them
+        scope.launch {
+            settings.settings.map { listOf(it.notifPrayer, it.notifDzikir, it.notifCheckin, it.location) }.distinctUntilChanged().collect { reminders.rescheduleAll() }
+        }
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onStop(owner: LifecycleOwner) = lock.onBackground()
 

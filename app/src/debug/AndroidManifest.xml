@@ -4,6 +4,7 @@
         <receiver android:name=".DebugSeeder" android:exported="true">
             <intent-filter>
                 <action android:name="com.iqbalansyori.izzah.SEED" />
+                <action android:name="com.iqbalansyori.izzah.REMIND_TEST" />
             </intent-filter>
         </receiver>
     </application>

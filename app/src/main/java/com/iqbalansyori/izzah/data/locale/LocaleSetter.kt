@@ -1,5 +1,6 @@
 package com.iqbalansyori.izzah.data.locale
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 
@@ -9,8 +10,9 @@ interface LocaleSetter {
     fun current(): String?
 }
 
-class AppCompatLocaleSetter : LocaleSetter {
+class AppCompatLocaleSetter(private val context: Context) : LocaleSetter {
     override fun set(tag: String?) {
+        LanguageStore.write(context, tag)
         AppCompatDelegate.setApplicationLocales(if (tag == null) LocaleListCompat.getEmptyLocaleList() else LocaleListCompat.forLanguageTags(tag))
     }
 

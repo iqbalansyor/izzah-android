@@ -20,6 +20,6 @@ val appModule = module {
     single { PermissionChecker(androidContext()) }
     single { BiometricChecker(androidContext()) }
     single { DisguiseManager(androidContext()) }
-    single<LocaleSetter> { AppCompatLocaleSetter() }
+    single<LocaleSetter> { AppCompatLocaleSetter(androidContext()) }
     single { CoroutineScope(SupervisorJob() + Dispatchers.Default) }
 }
