@@ -1,10 +1,13 @@
 package com.iqbalansyori.izzah.presentation.onboarding
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iqbalansyori.izzah.data.security.PinHasher
 import com.iqbalansyori.izzah.domain.TimeSource
 import com.iqbalansyori.izzah.domain.logic.SlotSchedule
+import com.iqbalansyori.izzah.domain.model.Rawan
+import com.iqbalansyori.izzah.domain.model.Why
 import com.iqbalansyori.izzah.domain.repository.SettingsRepository
 import com.iqbalansyori.izzah.domain.today
 import kotlinx.coroutines.Dispatchers
@@ -22,9 +25,10 @@ import kotlinx.coroutines.withContext
 class OnboardingViewModel(
     private val settings: SettingsRepository,
     private val time: TimeSource,
+    private val saved: SavedStateHandle,
     biometricAvailable: () -> Boolean,
 ) : ViewModel() {
-    private val _state = MutableStateFlow(OnboardingState(biometricAvailable = biometricAvailable()))
+    private val _state = MutableStateFlow(restore(biometricAvailable()))
     val state: StateFlow<OnboardingState> = _state.asStateFlow()
 
     private val _events = Channel<OnboardingEvent>(Channel.BUFFERED)
@@ -32,9 +36,9 @@ class OnboardingViewModel(
 
     fun onAction(a: OnboardingAction) {
         when (a) {
-            is OnboardingAction.ToggleWhy -> _state.update { it.copy(why = it.why.toggle(a.w)) }
-            is OnboardingAction.PickTarget -> _state.update { it.copy(target = a.n) }
-            is OnboardingAction.ToggleRawan -> _state.update { it.copy(rawan = it.rawan.toggle(a.r)) }
+            is OnboardingAction.ToggleWhy -> { _state.update { it.copy(why = it.why.toggle(a.w)) }; persist() }
+            is OnboardingAction.PickTarget -> { _state.update { it.copy(target = a.n) }; persist() }
+            is OnboardingAction.ToggleRawan -> { _state.update { it.copy(rawan = it.rawan.toggle(a.r)) }; persist() }
             is OnboardingAction.PermissionsChanged -> _state.update { it.copy(usageGranted = a.usage, overlayGranted = a.overlay) }
             is OnboardingAction.PinDigit -> pinDigit(a.d)
             OnboardingAction.PinDelete -> _state.update { it.copy(pinEntry = it.pinEntry.dropLast(1), pinMismatch = false) }
@@ -48,6 +52,23 @@ class OnboardingViewModel(
             }
             OnboardingAction.Finish -> finish()
         }
+    }
+
+    // the permission steps send the user to system Settings, where the process can be killed; the PIN is deliberately not saved
+    private fun persist() {
+        val s = _state.value
+        saved[KEY_WHY] = ArrayList(s.why.map { it.name })
+        saved[KEY_TARGET] = s.target
+        saved[KEY_RAWAN] = ArrayList(s.rawan.map { it.name })
+    }
+
+    private fun restore(biometricAvailable: Boolean): OnboardingState {
+        val defaults = OnboardingState(biometricAvailable = biometricAvailable)
+        return defaults.copy(
+            why = saved.get<ArrayList<String>>(KEY_WHY)?.mapNotNull { n -> Why.entries.firstOrNull { it.name == n } }?.toSet() ?: defaults.why,
+            target = saved.get<Int>(KEY_TARGET) ?: defaults.target,
+            rawan = saved.get<ArrayList<String>>(KEY_RAWAN)?.mapNotNull { n -> Rawan.entries.firstOrNull { it.name == n } }?.toSet() ?: defaults.rawan,
+        )
     }
 
     private fun pinDigit(d: Char) {
@@ -98,4 +119,10 @@ class OnboardingViewModel(
     }
 
     private fun <T> Set<T>.toggle(x: T): Set<T> = if (x in this) this - x else this + x
+
+    private companion object {
+        const val KEY_WHY = "why"
+        const val KEY_TARGET = "target"
+        const val KEY_RAWAN = "rawan"
+    }
 }

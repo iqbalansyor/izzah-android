@@ -1,5 +1,6 @@
 package com.iqbalansyori.izzah.presentation.onboarding
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import assertk.assertThat
 import assertk.assertions.isEqualTo
@@ -30,7 +31,8 @@ class OnboardingViewModelTest {
 
     private val time = FakeTimeSource(Instant.parse("2026-10-13T05:00:00Z"), TimeZone.of("Asia/Jakarta"))
     private val settings = FakeSettingsRepository()
-    private fun vm(biometric: Boolean = true) = OnboardingViewModel(settings, time) { biometric }
+    private fun vm(biometric: Boolean = true, handle: SavedStateHandle = SavedStateHandle()) =
+        OnboardingViewModel(settings, time, handle) { biometric }
 
     private fun OnboardingViewModel.pin(code: String) = code.forEach { onAction(OnboardingAction.PinDigit(it)) }
 
@@ -41,6 +43,19 @@ class OnboardingViewModelTest {
         assertThat(v.state.value.why).isEqualTo(setOf(Why.ALLAH, Why.FAMILY))
         v.onAction(OnboardingAction.ToggleWhy(Why.ALLAH))
         assertThat(v.state.value.why).isEqualTo(setOf(Why.FAMILY))
+    }
+
+    @Test
+    fun `selections survive process death`() {
+        val handle = SavedStateHandle()
+        val first = vm(handle = handle)
+        first.onAction(OnboardingAction.ToggleWhy(Why.FAMILY))
+        first.onAction(OnboardingAction.PickTarget(30))
+        first.onAction(OnboardingAction.ToggleRawan(Rawan.WEEKEND))
+        val restored = vm(handle = handle)
+        assertThat(restored.state.value.why).isEqualTo(setOf(Why.ALLAH, Why.FAMILY))
+        assertThat(restored.state.value.target).isEqualTo(30)
+        assertThat(restored.state.value.rawan).isEqualTo(setOf(Rawan.LATE_NIGHT, Rawan.WEEKEND))
     }
 
     @Test

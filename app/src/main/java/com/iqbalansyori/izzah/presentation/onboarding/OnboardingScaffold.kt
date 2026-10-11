@@ -28,6 +28,19 @@ import com.iqbalansyori.izzah.designsystem.theme.IzzahColors
 import com.iqbalansyori.izzah.designsystem.theme.IzzahType
 
 @Composable
+fun OnboardingHeader(step: Int, onBack: () -> Unit) {
+    Row(
+        Modifier.padding(start = 24.dp, end = 24.dp, top = 22.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        BackButton(onBack)
+        Column(Modifier.weight(1f)) { SegmentedProgress(total = 6, done = step) }
+        Text(stringResource(R.string.onboarding_progress, step), style = IzzahType.outfit(13.sp, FontWeight.SemiBold), color = IzzahColors.Meta)
+    }
+}
+
+@Composable
 fun OnboardingScaffold(
     step: Int,
     onBack: () -> Unit,
@@ -39,17 +52,9 @@ fun OnboardingScaffold(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(Modifier.fillMaxSize().background(IzzahColors.Bg).statusBarsPadding().navigationBarsPadding()) {
-        Row(
-            Modifier.padding(start = 24.dp, end = 24.dp, top = 22.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(14.dp),
-        ) {
-            BackButton(onBack)
-            Column(Modifier.weight(1f)) { SegmentedProgress(total = 6, done = step) }
-            Text(stringResource(R.string.onboarding_progress, step), style = IzzahType.outfit(13.sp, FontWeight.SemiBold), color = IzzahColors.Meta)
-        }
+        OnboardingHeader(step, onBack)
         Spacer(Modifier.height(26.dp))
-        Column(Modifier.weight(1f).fillMaxWidth().padding(horizontal = 24.dp), verticalArrangement = Arrangement.spacedBy(22.dp)) {
+        Column(Modifier.weight(1f).fillMaxWidth().padding(start = 24.dp, end = 24.dp, bottom = if (cta == null) 40.dp else 0.dp), verticalArrangement = Arrangement.spacedBy(22.dp)) {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(title, style = IzzahType.outfit(32.sp, FontWeight.Bold, tracking = -.03f, lineHeight = 1.1f))
                 Text(subtitle, style = IzzahType.outfit(15.sp, FontWeight.Normal, lineHeight = 1.5f), color = IzzahColors.TextSecondary)
