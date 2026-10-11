@@ -21,6 +21,8 @@ import androidx.navigation.toRoute
 import com.iqbalansyori.izzah.data.lock.AppLockManager
 import com.iqbalansyori.izzah.designsystem.theme.IzzahColors
 import com.iqbalansyori.izzah.domain.repository.SettingsRepository
+import com.iqbalansyori.izzah.presentation.splash.SplashScreen
+import com.iqbalansyori.izzah.presentation.welcome.WelcomeScreen
 import org.koin.compose.koinInject
 
 @Composable
@@ -58,8 +60,12 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
     }
 
     NavHost(nav, startDestination = SplashRoute) {
-        stub<SplashRoute>("Splash")
-        stub<WelcomeRoute>("Welcome")
+        composable<SplashRoute> {
+            SplashScreen(onDone = {
+                nav.navigate(if (onboardingDone) UnlockRoute else WelcomeRoute) { popUpTo(SplashRoute) { inclusive = true } }
+            })
+        }
+        composable<WelcomeRoute> { WelcomeScreen(onStart = { nav.navigate(OnboardingGraph) }, onPin = { nav.navigate(RestoreRoute) }) }
         stub<RestoreRoute>("Restore")
         navigation<OnboardingGraph>(startDestination = NiatRoute) {
             stub<NiatRoute>("Niat")
