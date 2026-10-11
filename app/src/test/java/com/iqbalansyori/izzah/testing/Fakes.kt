@@ -88,3 +88,12 @@ class FakeJedaRepository(events: List<com.iqbalansyori.izzah.domain.model.JedaEv
         eventsFlow.value = eventsFlow.value.map { if (it.id == id) it.copy(completed = true) else it }
     }
 }
+
+class FakeLocaleSetter(var tag: String? = null) : com.iqbalansyori.izzah.data.locale.LocaleSetter {
+    val calls = mutableListOf<String?>()
+    override fun set(tag: String?) {
+        calls += tag
+        this.tag = tag
+    }
+    override fun current(): String? = tag
+}

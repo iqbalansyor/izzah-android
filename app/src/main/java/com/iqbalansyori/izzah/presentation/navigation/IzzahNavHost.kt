@@ -30,6 +30,11 @@ import com.iqbalansyori.izzah.presentation.jeda.JedaRoot
 import com.iqbalansyori.izzah.presentation.jurnal.JurnalRoot
 import com.iqbalansyori.izzah.presentation.mulai.MulaiRoot
 import com.iqbalansyori.izzah.presentation.progress.ProgressRoot
+import com.iqbalansyori.izzah.presentation.settings.LanguageRoot
+import com.iqbalansyori.izzah.presentation.settings.RemindersRoot
+import com.iqbalansyori.izzah.presentation.settings.SettingsNav
+import com.iqbalansyori.izzah.presentation.settings.TargetEditRoot
+import com.iqbalansyori.izzah.presentation.settings.SettingsRoot
 import com.iqbalansyori.izzah.presentation.sholat.SholatRoot
 import com.iqbalansyori.izzah.presentation.splash.SplashScreen
 import com.iqbalansyori.izzah.presentation.welcome.WelcomeScreen
@@ -113,6 +118,17 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
                         ),
                     )
                     TabDest.PROGRESS -> ProgressRoot()
+                    TabDest.SETTINGS -> SettingsRoot(
+                        SettingsNav(
+                            onDisguise = { nav.navigate(DisguiseRoute) },
+                            onTarget = { nav.navigate(TargetEditRoute) },
+                            onReminders = { nav.navigate(RemindersRoute) },
+                            onSchedule = { selectTab(TabDest.PROTECT) },
+                            onData = { nav.navigate(DataRoute) },
+                            onCounselor = {},
+                            onLanguage = { nav.navigate(LanguageRoute) },
+                        ),
+                    )
                     else -> Placeholder(tab.name)
                 }
             }
@@ -123,9 +139,9 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
         composable<JurnalRoute> { JurnalRoot(onBack = { nav.popBackStack() }) }
         stub<DisguiseRoute>("Disguise")
         stub<DataRoute>("Data")
-        stub<LanguageRoute>("Language")
-        stub<TargetEditRoute>("TargetEdit")
-        stub<RemindersRoute>("Reminders")
+        composable<LanguageRoute> { LanguageRoot(onBack = { nav.popBackStack() }) }
+        composable<TargetEditRoute> { TargetEditRoot(onBack = { nav.popBackStack() }) }
+        composable<RemindersRoute> { RemindersRoot(onBack = { nav.popBackStack() }) }
         stub<AppPickerRoute>("AppPicker")
         composable<JedaRoute> { JedaRoot(onClose = { nav.popBackStack() }, onDoa = { nav.navigate(DoaRoute) }) }
         composable<MulaiLagiRoute> {

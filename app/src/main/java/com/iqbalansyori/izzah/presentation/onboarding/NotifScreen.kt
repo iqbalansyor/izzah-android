@@ -19,18 +19,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.iqbalansyori.izzah.R
-import com.iqbalansyori.izzah.data.locale.LocaleFormats
-import com.iqbalansyori.izzah.designsystem.component.IzzahSwitch
 import com.iqbalansyori.izzah.designsystem.icons.IzzahGlyphs
 import com.iqbalansyori.izzah.designsystem.theme.IzzahColors
 import com.iqbalansyori.izzah.designsystem.theme.IzzahShapes
 import com.iqbalansyori.izzah.designsystem.theme.IzzahType
-import com.iqbalansyori.izzah.domain.logic.ReminderDefaults
-import org.koin.compose.koinInject
+import com.iqbalansyori.izzah.presentation.common.ReminderToggles
 
 @Composable
 fun NotifScreen(state: OnboardingState, onAction: (OnboardingAction) -> Unit, onBack: () -> Unit, onNext: () -> Unit) {
-    val formats = koinInject<LocaleFormats>()
     OnboardingScaffold(
         step = 6,
         onBack = onBack,
@@ -55,36 +51,13 @@ fun NotifScreen(state: OnboardingState, onAction: (OnboardingAction) -> Unit, on
                 Text(stringResource(R.string.notif_preview_body), style = IzzahType.outfit(14.sp, FontWeight.Normal), color = IzzahColors.Text2)
             }
         }
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            NotifRow(stringResource(R.string.notif_opt_prayer), stringResource(R.string.notif_opt_prayer_desc), state.notifPrayer) {
-                onAction(OnboardingAction.SetNotif(prayer = it))
-            }
-            NotifRow(stringResource(R.string.notif_opt_dzikir), stringResource(R.string.notif_opt_dzikir_desc), state.notifDzikir) {
-                onAction(OnboardingAction.SetNotif(dzikir = it))
-            }
-            NotifRow(
-                stringResource(R.string.notif_opt_checkin),
-                stringResource(R.string.notif_opt_checkin_desc, formats.minuteOfDay(ReminderDefaults.CHECKIN_MINUTE)),
-                state.notifCheckin,
-            ) { onAction(OnboardingAction.SetNotif(checkin = it)) }
-        }
+        ReminderToggles(
+            prayer = state.notifPrayer, dzikir = state.notifDzikir, checkin = state.notifCheckin,
+            onPrayer = { onAction(OnboardingAction.SetNotif(prayer = it)) },
+            onDzikir = { onAction(OnboardingAction.SetNotif(dzikir = it)) },
+            onCheckin = { onAction(OnboardingAction.SetNotif(checkin = it)) },
+        )
     }
 }
 
 private val RoundedCorner20 = androidx.compose.foundation.shape.RoundedCornerShape(20.dp)
-
-@Composable
-private fun NotifRow(title: String, desc: String, checked: Boolean, onChange: (Boolean) -> Unit) {
-    Row(
-        Modifier.fillMaxWidth().clip(androidx.compose.foundation.shape.RoundedCornerShape(18.dp)).background(IzzahColors.Card)
-            .padding(horizontal = 16.dp, vertical = 14.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(14.dp),
-    ) {
-        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(title, style = IzzahType.outfit(16.sp, FontWeight.SemiBold))
-            Text(desc, style = IzzahType.outfit(13.sp, FontWeight.Normal), color = IzzahColors.Meta)
-        }
-        IzzahSwitch(checked, onChange)
-    }
-}

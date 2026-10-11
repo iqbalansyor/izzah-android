@@ -2,6 +2,7 @@ package com.iqbalansyori.izzah.presentation.common
 
 import androidx.annotation.StringRes
 import com.iqbalansyori.izzah.R
+import com.iqbalansyori.izzah.domain.model.Disguise
 import com.iqbalansyori.izzah.domain.model.Mood
 import com.iqbalansyori.izzah.domain.model.Prayer
 import com.iqbalansyori.izzah.domain.model.Rawan
@@ -58,4 +59,13 @@ val Trigger.label: Int
         Trigger.SOCIAL -> R.string.trigger_social
         Trigger.TIRED -> R.string.trigger_tired
         Trigger.NO_SLEEP -> R.string.trigger_no_sleep
+    }
+
+@get:StringRes
+val Disguise.label: Int
+    get() = when (this) {
+        Disguise.IZZAH -> R.string.disguise_izzah
+        Disguise.STEPS -> R.string.disguise_steps
+        Disguise.FOCUS -> R.string.disguise_focus
+        Disguise.NOTES -> R.string.disguise_notes
     }

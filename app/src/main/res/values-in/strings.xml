@@ -240,6 +240,7 @@
     <string name="settings_group_data">Data &amp; bantuan</string>
     <string name="settings_export_delete">Ekspor &amp; hapus data</string>
     <string name="settings_counselor">Bicara dengan konselor</string>
+    <string name="counselor_placeholder">Segera hadir. Kami sedang menyiapkan kontak konselor yang tepercaya.</string>
     <string name="settings_about">Tentang Izzah</string>
     <string name="settings_language">Bahasa</string>
     <string name="language_system">Ikuti sistem</string>

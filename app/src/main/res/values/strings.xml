@@ -240,6 +240,7 @@
     <string name="settings_group_data">Data &amp; help</string>
     <string name="settings_export_delete">Export &amp; delete data</string>
     <string name="settings_counselor">Talk to a counselor</string>
+    <string name="counselor_placeholder">Coming soon. We\'re preparing a trusted counselor contact.</string>
     <string name="settings_about">About Izzah</string>
     <string name="settings_language">Language</string>
     <string name="language_system">System default</string>

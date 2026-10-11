@@ -10,6 +10,9 @@ import com.iqbalansyori.izzah.presentation.home.HomeViewModel
 import com.iqbalansyori.izzah.presentation.jeda.JedaViewModel
 import com.iqbalansyori.izzah.presentation.jurnal.JurnalViewModel
 import com.iqbalansyori.izzah.presentation.mulai.MulaiViewModel
+import com.iqbalansyori.izzah.presentation.settings.SettingsViewModel
+import com.iqbalansyori.izzah.BuildConfig
+import com.iqbalansyori.izzah.data.security.BiometricChecker
 import com.iqbalansyori.izzah.presentation.onboarding.OnboardingViewModel
 import com.iqbalansyori.izzah.presentation.progress.ProgressViewModel
 import com.iqbalansyori.izzah.presentation.sholat.SholatViewModel
@@ -26,6 +29,7 @@ val viewModelModule = module {
     viewModel { DzikirViewModel() }
     viewModel { JurnalViewModel(get()) }
     viewModel { MulaiViewModel(get()) }
+    viewModel { SettingsViewModel(get(), get(), BuildConfig.VERSION_NAME) { get<BiometricChecker>().isAvailable() } }
     viewModel { SholatViewModel(get(), get(), get(), get<CityCatalog>().cities, get()) }
     viewModel {
         val context = androidContext()
