@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.iqbalansyori.izzah.data.lock.AppLockManager
 import com.iqbalansyori.izzah.data.notify.NotificationChannels
+import com.iqbalansyori.izzah.domain.repository.BlockingController
 import com.iqbalansyori.izzah.domain.repository.ReminderScheduler
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -32,9 +33,14 @@ class IzzahApp : Application() {
         val settings = get<SettingsRepository>()
         val scope = get<CoroutineScope>()
         val reminders = get<ReminderScheduler>()
+        val blocking = get<BlockingController>()
         // reminders depend on the toggles and the location, so any change (and the first emission at start) replans them
         scope.launch {
             settings.settings.map { listOf(it.notifPrayer, it.notifDzikir, it.notifCheckin, it.location) }.distinctUntilChanged().collect { reminders.rescheduleAll() }
+        }
+        // blocking depends on what is locked, the schedule and the lock mode, so any change (and the first emission) re-evaluates it
+        scope.launch {
+            settings.settings.map { Triple(it.lockedPackages, it.slots, it.lockMode) }.distinctUntilChanged().collect { blocking.evaluate() }
         }
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onStop(owner: LifecycleOwner) = lock.onBackground()

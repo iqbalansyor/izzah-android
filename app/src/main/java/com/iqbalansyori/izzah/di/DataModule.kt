@@ -6,7 +6,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.iqbalansyori.izzah.data.DataWiper
-import com.iqbalansyori.izzah.data.NoopBlockingController
+import com.iqbalansyori.izzah.data.blocking.ServiceBlockingController
 import com.iqbalansyori.izzah.data.notify.AlarmReminderScheduler
 import com.iqbalansyori.izzah.data.backup.BackupRepositoryImpl
 import com.iqbalansyori.izzah.data.backup.BackupStore
@@ -52,7 +52,7 @@ val dataModule = module {
     single<BackupRepository> { BackupRepositoryImpl(get(), get()) }
     single { AlarmReminderScheduler(androidContext(), get(), get(), get()) }
     single<ReminderScheduler> { get<AlarmReminderScheduler>() }
-    single<BlockingController> { NoopBlockingController }
+    single<BlockingController> { ServiceBlockingController(androidContext(), get(), get(), get()) }
     single { DataWiper(androidContext(), get(), get(), get(), get(), get(), get()) }
     single<SettingsRepository> { SettingsRepositoryImpl(androidContext().settingsStore) }
     single<DayLogStore> { DayLogStoreImpl(get()) }

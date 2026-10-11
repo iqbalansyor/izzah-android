@@ -15,6 +15,7 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.iqbalansyori.izzah.data.blocking.KeepRunningGuide
 import com.iqbalansyori.izzah.data.blocking.PermissionChecker
+import com.iqbalansyori.izzah.domain.repository.BlockingController
 import com.iqbalansyori.izzah.domain.repository.InstalledAppsRepository
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -31,11 +32,14 @@ fun ProtectRoot(onAddApp: () -> Unit, onPreview: () -> Unit, vm: ProtectViewMode
     val state by vm.state.collectAsStateWithLifecycle()
     val checker = koinInject<PermissionChecker>()
     val guide = koinInject<KeepRunningGuide>()
+    val blocking = koinInject<BlockingController>()
     val context = LocalContext.current
     var keepDone by remember { mutableStateOf(false) }
     // returning from the Settings pages re-checks the grants (no navigation here, so no NavController re-entrancy)
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
         vm.onAction(ProtectAction.PermissionsChanged(checker.hasUsageAccess(), checker.hasOverlayPermission()))
+        // a permission just granted in Settings may be what lets the service start
+        blocking.evaluate()
     }
     ProtectScreen(
         state = state.copy(showKeepRunning = state.showKeepRunning && !keepDone),

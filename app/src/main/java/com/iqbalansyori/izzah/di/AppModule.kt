@@ -1,7 +1,9 @@
 package com.iqbalansyori.izzah.di
 
 import com.iqbalansyori.izzah.data.SystemTimeSource
+import com.iqbalansyori.izzah.data.blocking.ForegroundAppMonitor
 import com.iqbalansyori.izzah.data.blocking.KeepRunningGuide
+import com.iqbalansyori.izzah.data.blocking.OverlayController
 import com.iqbalansyori.izzah.data.blocking.PermissionChecker
 import com.iqbalansyori.izzah.data.repository.InstalledAppsRepositoryImpl
 import com.iqbalansyori.izzah.domain.repository.InstalledAppsRepository
@@ -24,6 +26,8 @@ val appModule = module {
     single { BiometricChecker(androidContext()) }
     single { DisguiseManager(androidContext()) }
     single { KeepRunningGuide(androidContext()) }
+    single { ForegroundAppMonitor(androidContext()) }
+    factory { OverlayController(androidContext()) }
     single<InstalledAppsRepository> { InstalledAppsRepositoryImpl(androidContext()) }
     single<LocaleSetter> { AppCompatLocaleSetter(androidContext()) }
     single { CoroutineScope(SupervisorJob() + Dispatchers.Default) }

@@ -61,6 +61,7 @@ class OverlayController(private val context: Context) {
             WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
         }
 
+        // do not add LAYOUT_NO_LIMITS or fitInsetsTypes = 0 to cover the system-bar strips: both make the overlay ignore touches
         var flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
         if (!touchable) flags = flags or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
 
