@@ -9,6 +9,7 @@ import com.iqbalansyori.izzah.presentation.dzikir.DzikirViewModel
 import com.iqbalansyori.izzah.presentation.home.HomeViewModel
 import com.iqbalansyori.izzah.presentation.jeda.JedaViewModel
 import com.iqbalansyori.izzah.presentation.jurnal.JurnalViewModel
+import com.iqbalansyori.izzah.presentation.mulai.MulaiViewModel
 import com.iqbalansyori.izzah.presentation.onboarding.OnboardingViewModel
 import com.iqbalansyori.izzah.presentation.progress.ProgressViewModel
 import com.iqbalansyori.izzah.presentation.sholat.SholatViewModel
@@ -24,6 +25,7 @@ val viewModelModule = module {
     viewModel { JedaViewModel(get(), get()) }
     viewModel { DzikirViewModel() }
     viewModel { JurnalViewModel(get()) }
+    viewModel { MulaiViewModel(get()) }
     viewModel { SholatViewModel(get(), get(), get(), get<CityCatalog>().cities, get()) }
     viewModel {
         val context = androidContext()

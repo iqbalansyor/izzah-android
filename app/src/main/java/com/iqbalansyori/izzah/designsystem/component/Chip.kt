@@ -24,20 +24,20 @@ import com.iqbalansyori.izzah.designsystem.theme.IzzahColors
 import com.iqbalansyori.izzah.designsystem.theme.IzzahType
 
 @Composable
-fun IzzahChip(label: String, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun IzzahChip(label: String, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier, compact: Boolean = false) {
     val interaction = remember { MutableInteractionSource() }
-    val shape = RoundedCornerShape(22.dp)
+    val shape = RoundedCornerShape(if (compact) 19.dp else 22.dp)
     Box(
         modifier
-            .height(44.dp)
+            .height(if (compact) 38.dp else 44.dp)
             .pressScale(interaction)
             .clip(shape)
             .then(if (selected) Modifier.background(IzzahColors.Text) else Modifier.border(1.dp, IzzahColors.ChipOutline, shape))
             .semantics { this.selected = selected }
             .clickable(interaction, null, role = Role.Checkbox, onClick = onClick)
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = if (compact) 14.dp else 16.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Text(label, style = IzzahType.outfit(15.sp, FontWeight.SemiBold), color = if (selected) IzzahColors.Bg else IzzahColors.Text)
+        Text(label, style = IzzahType.outfit(if (compact) 14.sp else 15.sp, FontWeight.SemiBold), color = if (selected) IzzahColors.Bg else IzzahColors.Text)
     }
 }

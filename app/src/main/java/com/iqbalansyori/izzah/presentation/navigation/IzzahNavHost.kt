@@ -28,6 +28,7 @@ import com.iqbalansyori.izzah.presentation.home.HomeNav
 import com.iqbalansyori.izzah.presentation.home.HomeRoot
 import com.iqbalansyori.izzah.presentation.jeda.JedaRoot
 import com.iqbalansyori.izzah.presentation.jurnal.JurnalRoot
+import com.iqbalansyori.izzah.presentation.mulai.MulaiRoot
 import com.iqbalansyori.izzah.presentation.progress.ProgressRoot
 import com.iqbalansyori.izzah.presentation.sholat.SholatRoot
 import com.iqbalansyori.izzah.presentation.splash.SplashScreen
@@ -127,7 +128,12 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
         stub<RemindersRoute>("Reminders")
         stub<AppPickerRoute>("AppPicker")
         composable<JedaRoute> { JedaRoot(onClose = { nav.popBackStack() }, onDoa = { nav.navigate(DoaRoute) }) }
-        stub<MulaiLagiRoute>("MulaiLagi")
+        composable<MulaiLagiRoute> {
+            MulaiRoot(
+                onClose = { nav.popBackStack() },
+                onDone = { nav.navigate(MainRoute(TabDest.HOME)) { popUpTo(nav.graph.id) { inclusive = true } } },
+            )
+        }
         stub<ShieldPreviewRoute>("ShieldPreview")
     }
 }
