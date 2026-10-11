@@ -24,6 +24,7 @@ import com.iqbalansyori.izzah.domain.repository.SettingsRepository
 import com.iqbalansyori.izzah.designsystem.component.TabDest
 import com.iqbalansyori.izzah.presentation.home.HomeNav
 import com.iqbalansyori.izzah.presentation.home.HomeRoot
+import com.iqbalansyori.izzah.presentation.jeda.JedaRoot
 import com.iqbalansyori.izzah.presentation.progress.ProgressRoot
 import com.iqbalansyori.izzah.presentation.splash.SplashScreen
 import com.iqbalansyori.izzah.presentation.welcome.WelcomeScreen
@@ -121,7 +122,7 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
         stub<TargetEditRoute>("TargetEdit")
         stub<RemindersRoute>("Reminders")
         stub<AppPickerRoute>("AppPicker")
-        stub<JedaRoute>("Jeda")
+        composable<JedaRoute> { JedaRoot(onClose = { nav.popBackStack() }, onDoa = { nav.navigate(DoaRoute) }) }
         stub<MulaiLagiRoute>("MulaiLagi")
         stub<ShieldPreviewRoute>("ShieldPreview")
     }

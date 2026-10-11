@@ -73,6 +73,12 @@ class FakeJedaRepository(events: List<com.iqbalansyori.izzah.domain.model.JedaEv
     com.iqbalansyori.izzah.domain.repository.JedaRepository {
     val eventsFlow = MutableStateFlow(events)
     override fun observeEvents(): Flow<List<com.iqbalansyori.izzah.domain.model.JedaEvent>> = eventsFlow
-    override suspend fun start(): Long = 0
-    override suspend fun complete(id: Long) = Unit
+    override suspend fun start(): Long {
+        val id = (eventsFlow.value.maxOfOrNull { it.id } ?: 0L) + 1
+        eventsFlow.value = eventsFlow.value + com.iqbalansyori.izzah.domain.model.JedaEvent(id, kotlinx.datetime.Instant.fromEpochMilliseconds(0), false)
+        return id
+    }
+    override suspend fun complete(id: Long) {
+        eventsFlow.value = eventsFlow.value.map { if (it.id == id) it.copy(completed = true) else it }
+    }
 }
