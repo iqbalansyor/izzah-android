@@ -20,5 +20,6 @@ sealed interface SettingsAction {
     data class SetHideInRecents(val on: Boolean) : SettingsAction
     data class SetTarget(val n: Int) : SettingsAction
     data class SetLanguage(val tag: String?) : SettingsAction
+    data class SetDisguise(val d: Disguise) : SettingsAction
     data class SetNotif(val prayer: Boolean? = null, val dzikir: Boolean? = null, val checkin: Boolean? = null) : SettingsAction
 }

@@ -3,6 +3,7 @@ package com.iqbalansyori.izzah.presentation.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iqbalansyori.izzah.data.locale.LocaleSetter
+import com.iqbalansyori.izzah.domain.model.Disguise
 import com.iqbalansyori.izzah.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,6 +18,7 @@ class SettingsViewModel(
     private val locale: LocaleSetter,
     private val versionName: String,
     private val biometricAvailable: () -> Boolean,
+    private val applyDisguise: (Disguise) -> Unit = {},
 ) : ViewModel() {
     private val languageTag = MutableStateFlow(locale.current())
 
@@ -46,6 +48,10 @@ class SettingsViewModel(
                     notifDzikir = a.dzikir ?: it.notifDzikir,
                     notifCheckin = a.checkin ?: it.notifCheckin,
                 )
+            }
+            is SettingsAction.SetDisguise -> {
+                applyDisguise(a.d)
+                update { it.copy(disguise = a.d) }
             }
             is SettingsAction.SetLanguage -> {
                 languageTag.value = a.tag

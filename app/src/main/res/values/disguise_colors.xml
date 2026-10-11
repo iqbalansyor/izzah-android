@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="disguise_steps_bg">#CFE3D8</color>
+    <color name="disguise_steps_fg">#2B3A34</color>
+    <color name="disguise_focus_bg">#E2DCF5</color>
+    <color name="disguise_focus_fg">#33303F</color>
+    <color name="disguise_notes_bg">#EDE4CF</color>
+    <color name="disguise_notes_fg">#3D3A33</color>
+</resources>

@@ -30,6 +30,7 @@ import com.iqbalansyori.izzah.presentation.jeda.JedaRoot
 import com.iqbalansyori.izzah.presentation.jurnal.JurnalRoot
 import com.iqbalansyori.izzah.presentation.mulai.MulaiRoot
 import com.iqbalansyori.izzah.presentation.progress.ProgressRoot
+import com.iqbalansyori.izzah.presentation.settings.DisguiseRoot
 import com.iqbalansyori.izzah.presentation.settings.LanguageRoot
 import com.iqbalansyori.izzah.presentation.settings.RemindersRoot
 import com.iqbalansyori.izzah.presentation.settings.SettingsNav
@@ -137,7 +138,7 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
         composable<DzikirRoute> { DzikirRoot(onBack = { nav.popBackStack() }) }
         composable<DoaRoute> { DoaScreen(onBack = { nav.popBackStack() }) }
         composable<JurnalRoute> { JurnalRoot(onBack = { nav.popBackStack() }) }
-        stub<DisguiseRoute>("Disguise")
+        composable<DisguiseRoute> { DisguiseRoot(onBack = { nav.popBackStack() }) }
         stub<DataRoute>("Data")
         composable<LanguageRoute> { LanguageRoot(onBack = { nav.popBackStack() }) }
         composable<TargetEditRoute> { TargetEditRoot(onBack = { nav.popBackStack() }) }

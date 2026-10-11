@@ -33,3 +33,9 @@ fun RemindersRoot(onBack: () -> Unit, vm: SettingsViewModel = koinViewModel()) {
     val state by vm.state.collectAsStateWithLifecycle()
     RemindersScreen(state, vm::onAction, onBack)
 }
+
+@Composable
+fun DisguiseRoot(onBack: () -> Unit, vm: SettingsViewModel = koinViewModel()) {
+    val state by vm.state.collectAsStateWithLifecycle()
+    com.iqbalansyori.izzah.presentation.disguise.DisguiseScreen(state, vm::onAction, onBack)
+}

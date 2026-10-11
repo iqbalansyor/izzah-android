@@ -6,6 +6,7 @@ import assertk.assertions.containsExactly
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
 import assertk.assertions.isTrue
+import com.iqbalansyori.izzah.domain.model.Disguise
 import com.iqbalansyori.izzah.domain.model.Settings
 import com.iqbalansyori.izzah.testing.FakeLocaleSetter
 import com.iqbalansyori.izzah.testing.FakeSettingsRepository
@@ -23,7 +24,8 @@ class SettingsViewModelTest {
 
     private val settings = FakeSettingsRepository(Settings(onboardingDone = true))
     private val locale = FakeLocaleSetter()
-    private fun vm(biometricAvailable: Boolean = true) = SettingsViewModel(settings, locale, "1.0", { biometricAvailable })
+    private val applied = mutableListOf<Disguise>()
+    private fun vm(biometricAvailable: Boolean = true) = SettingsViewModel(settings, locale, "1.0", { biometricAvailable }, { applied += it })
 
     @Test
     fun `state mirrors settings and exposes version and availability`() = runTest {
@@ -59,6 +61,13 @@ class SettingsViewModelTest {
         assertThat(s.notifDzikir).isFalse()
         assertThat(s.notifPrayer).isTrue()
         assertThat(s.notifCheckin).isTrue()
+    }
+
+    @Test
+    fun `disguise is applied and stored`() = runTest {
+        vm().onAction(SettingsAction.SetDisguise(Disguise.NOTES))
+        assertThat(applied).containsExactly(Disguise.NOTES)
+        assertThat(settings.current().disguise).isEqualTo(Disguise.NOTES)
     }
 
     @Test
