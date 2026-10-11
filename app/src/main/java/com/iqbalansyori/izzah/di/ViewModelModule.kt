@@ -12,6 +12,8 @@ import com.iqbalansyori.izzah.presentation.restore.RestoreViewModel
 import com.iqbalansyori.izzah.presentation.jeda.JedaViewModel
 import com.iqbalansyori.izzah.presentation.jurnal.JurnalViewModel
 import com.iqbalansyori.izzah.presentation.mulai.MulaiViewModel
+import com.iqbalansyori.izzah.presentation.protect.ProtectViewModel
+import com.iqbalansyori.izzah.data.blocking.KeepRunningGuide
 import com.iqbalansyori.izzah.presentation.settings.SettingsViewModel
 import com.iqbalansyori.izzah.BuildConfig
 import com.iqbalansyori.izzah.data.disguise.DisguiseManager
@@ -32,6 +34,7 @@ val viewModelModule = module {
     viewModel { DzikirViewModel() }
     viewModel { JurnalViewModel(get()) }
     viewModel { MulaiViewModel(get()) }
+    viewModel { ProtectViewModel(get(), get()) { get<KeepRunningGuide>().shouldShow() } }
     viewModel { DataViewModel(get(), get(), get()) }
     viewModel { RestoreViewModel(get(), get()) }
     viewModel { SettingsViewModel(get(), get(), BuildConfig.VERSION_NAME, { get<BiometricChecker>().isAvailable() }, { get<DisguiseManager>().apply(it) }) }

@@ -210,6 +210,17 @@
     <string name="mode_full">Kunci penuh</string>
     <string name="mode_full_desc">Tidak bisa dibuka sampai jadwal selesai</string>
     <string name="protect_preview_shield">Lihat tampilan saat terkunci</string>
+    <string name="keeprun_title">Biarkan Izzah tetap berjalan</string>
+    <string name="keeprun_desc">HP-mu bisa menghentikan Izzah di latar belakang. Izinkan Autostart dan lepas batas baterai supaya pagar tetap berfungsi.</string>
+    <string name="keeprun_autostart">Izinkan Autostart</string>
+    <string name="keeprun_battery">Lepas batas baterai</string>
+    <string name="keeprun_done">Sudah kuatur</string>
+    <string name="apppicker_title">Pilih aplikasi</string>
+    <string name="apppicker_suggested">Disarankan</string>
+    <string name="apppicker_all">Semua aplikasi</string>
+    <string name="apppicker_search">Cari aplikasi</string>
+    <string name="slot_edit_from">Dari</string>
+    <string name="slot_edit_to">Sampai</string>
     <string name="shield_label">Waktu terjaga · sampai %1$s</string>
     <string name="shield_title">Sudah larut. Istirahat dulu, yuk.</string>
     <string name="shield_title_day">Sebentar dulu. Tarik napas, yuk.</string>

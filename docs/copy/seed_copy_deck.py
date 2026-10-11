@@ -233,6 +233,17 @@ s("mode_pause_desc", "Lindungi", "Napas dulu, lalu boleh buka 5 menit", "Breathe
 s("mode_full", "Lindungi", "Kunci penuh", "Full lock")
 s("mode_full_desc", "Lindungi", "Tidak bisa dibuka sampai jadwal selesai", "Can't be opened until the schedule ends")
 s("protect_preview_shield", "Lindungi", "Lihat tampilan saat terkunci", "Preview the locked screen")
+s("keeprun_title", "Lindungi", "Biarkan Izzah tetap berjalan", "Keep Izzah running", "Xiaomi/Redmi/POCO only. Written for the Android build, needs review.", "NEW")
+s("keeprun_desc", "Lindungi", "HP-mu bisa menghentikan Izzah di latar belakang. Izinkan Autostart dan lepas batas baterai supaya pagar tetap berfungsi.", "Your phone may stop Izzah in the background. Allow Autostart and remove the battery limit so the fence keeps working.", "Needs review.", "NEW")
+s("keeprun_autostart", "Lindungi", "Izinkan Autostart", "Allow Autostart", "Opens the vendor Autostart screen.", "NEW")
+s("keeprun_battery", "Lindungi", "Lepas batas baterai", "Remove battery limit", "Opens the vendor battery screen.", "NEW")
+s("keeprun_done", "Lindungi", "Sudah kuatur", "All set", "Hides the card for good.", "NEW")
+s("apppicker_title", "Pilih aplikasi", "Pilih aplikasi", "Choose apps", "Title of the app picker opened from Protect. Needs review.", "NEW")
+s("apppicker_suggested", "Pilih aplikasi", "Disarankan", "Suggested", "Small header over the suggested browsers and social apps that are installed.", "NEW")
+s("apppicker_all", "Pilih aplikasi", "Semua aplikasi", "All apps", "Small header over the alphabetical list.", "NEW")
+s("apppicker_search", "Pilih aplikasi", "Cari aplikasi", "Search apps", "Search field placeholder.", "NEW")
+s("slot_edit_from", "Lindungi", "Dari", "From", "Label above the start time picker in the schedule editor. Needs review.", "NEW")
+s("slot_edit_to", "Lindungi", "Sampai", "To", "Label above the end time picker in the schedule editor. Needs review.", "NEW")
 
 # Terkunci
 s("shield_label", "Layar terkunci", "Waktu terjaga · sampai {time}", "Guarded hours · until {time}", "Rendered UPPERCASE.")

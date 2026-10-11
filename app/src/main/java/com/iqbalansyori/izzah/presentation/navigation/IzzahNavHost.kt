@@ -32,6 +32,9 @@ import com.iqbalansyori.izzah.presentation.jeda.JedaRoot
 import com.iqbalansyori.izzah.presentation.jurnal.JurnalRoot
 import com.iqbalansyori.izzah.presentation.mulai.MulaiRoot
 import com.iqbalansyori.izzah.presentation.progress.ProgressRoot
+import com.iqbalansyori.izzah.presentation.protect.AppPickerRoot
+import com.iqbalansyori.izzah.presentation.protect.ProtectRoot
+import com.iqbalansyori.izzah.presentation.shield.ShieldPreviewScreen
 import com.iqbalansyori.izzah.presentation.restore.RestoreRoot
 import com.iqbalansyori.izzah.presentation.settings.DisguiseRoot
 import com.iqbalansyori.izzah.presentation.settings.LanguageRoot
@@ -122,6 +125,7 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
                         ),
                     )
                     TabDest.PROGRESS -> ProgressRoot()
+                    TabDest.PROTECT -> ProtectRoot(onAddApp = { nav.navigate(AppPickerRoute) }, onPreview = { nav.navigate(ShieldPreviewRoute) })
                     TabDest.SETTINGS -> SettingsRoot(
                         SettingsNav(
                             onDisguise = { nav.navigate(DisguiseRoute) },
@@ -146,7 +150,7 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
         composable<LanguageRoute> { LanguageRoot(onBack = { nav.popBackStack() }) }
         composable<TargetEditRoute> { TargetEditRoot(onBack = { nav.popBackStack() }) }
         composable<RemindersRoute> { RemindersRoot(onBack = { nav.popBackStack() }) }
-        stub<AppPickerRoute>("AppPicker")
+        composable<AppPickerRoute> { AppPickerRoot(onBack = { nav.popBackStack() }) }
         composable<JedaRoute> { JedaRoot(onClose = { nav.popBackStack() }, onDoa = { nav.navigate(DoaRoute) }) }
         composable<MulaiLagiRoute> {
             MulaiRoot(
@@ -154,6 +158,6 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
                 onDone = { nav.navigate(MainRoute(TabDest.HOME)) { popUpTo(nav.graph.id) { inclusive = true } } },
             )
         }
-        stub<ShieldPreviewRoute>("ShieldPreview")
+        composable<ShieldPreviewRoute> { ShieldPreviewScreen(onJeda = { nav.navigate(JedaRoute) }, onClose = { nav.popBackStack() }) }
     }
 }

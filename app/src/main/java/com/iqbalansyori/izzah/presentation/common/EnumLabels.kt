@@ -3,6 +3,7 @@ package com.iqbalansyori.izzah.presentation.common
 import androidx.annotation.StringRes
 import com.iqbalansyori.izzah.R
 import com.iqbalansyori.izzah.domain.model.Disguise
+import com.iqbalansyori.izzah.domain.model.LockMode
 import com.iqbalansyori.izzah.domain.model.Mood
 import com.iqbalansyori.izzah.domain.model.Prayer
 import com.iqbalansyori.izzah.domain.model.Rawan
@@ -68,4 +69,20 @@ val Disguise.label: Int
         Disguise.STEPS -> R.string.disguise_steps
         Disguise.FOCUS -> R.string.disguise_focus
         Disguise.NOTES -> R.string.disguise_notes
+    }
+
+@get:StringRes
+val LockMode.label: Int
+    get() = when (this) {
+        LockMode.GENTLE -> R.string.mode_gentle
+        LockMode.PAUSE -> R.string.mode_pause
+        LockMode.FULL -> R.string.mode_full
+    }
+
+@get:StringRes
+val LockMode.description: Int
+    get() = when (this) {
+        LockMode.GENTLE -> R.string.mode_gentle_desc
+        LockMode.PAUSE -> R.string.mode_pause_desc
+        LockMode.FULL -> R.string.mode_full_desc
     }

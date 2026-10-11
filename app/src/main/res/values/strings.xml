@@ -210,6 +210,17 @@
     <string name="mode_full">Full lock</string>
     <string name="mode_full_desc">Can\'t be opened until the schedule ends</string>
     <string name="protect_preview_shield">Preview the locked screen</string>
+    <string name="keeprun_title">Keep Izzah running</string>
+    <string name="keeprun_desc">Your phone may stop Izzah in the background. Allow Autostart and remove the battery limit so the fence keeps working.</string>
+    <string name="keeprun_autostart">Allow Autostart</string>
+    <string name="keeprun_battery">Remove battery limit</string>
+    <string name="keeprun_done">All set</string>
+    <string name="apppicker_title">Choose apps</string>
+    <string name="apppicker_suggested">Suggested</string>
+    <string name="apppicker_all">All apps</string>
+    <string name="apppicker_search">Search apps</string>
+    <string name="slot_edit_from">From</string>
+    <string name="slot_edit_to">To</string>
     <string name="shield_label">Guarded hours · until %1$s</string>
     <string name="shield_title">It\'s late. Time to rest, okay?</string>
     <string name="shield_title_day">Hold on a moment. Let\'s take a breath.</string>

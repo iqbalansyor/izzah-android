@@ -97,3 +97,9 @@ class FakeLocaleSetter(var tag: String? = null) : com.iqbalansyori.izzah.data.lo
     }
     override fun current(): String? = tag
 }
+
+class FakeInstalledApps(private val labels: Map<String, String> = emptyMap()) : com.iqbalansyori.izzah.domain.repository.InstalledAppsRepository {
+    override suspend fun launchable() = labels.map { com.iqbalansyori.izzah.domain.repository.InstalledApp(it.key, it.value) }
+    override fun icon(pkg: String): android.graphics.drawable.Drawable? = null
+    override fun label(pkg: String): String? = labels[pkg]
+}
