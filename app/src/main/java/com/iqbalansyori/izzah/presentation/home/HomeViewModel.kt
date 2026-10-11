@@ -6,7 +6,6 @@ import com.iqbalansyori.izzah.domain.TimeSource
 import com.iqbalansyori.izzah.domain.logic.BarKind
 import com.iqbalansyori.izzah.domain.logic.DayMath
 import com.iqbalansyori.izzah.domain.localNow
-import com.iqbalansyori.izzah.domain.model.JournalEntry
 import com.iqbalansyori.izzah.domain.model.Prayer
 import com.iqbalansyori.izzah.domain.repository.JournalRepository
 import com.iqbalansyori.izzah.domain.repository.JourneyRepository
@@ -19,9 +18,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
-import kotlinx.datetime.toLocalDateTime
 
 class HomeViewModel(
     journey: JourneyRepository,
@@ -59,9 +56,7 @@ class HomeViewModel(
         val day = bar?.day
         s.copy(
             selected = if (day != null) sel else null,
-            sheetDay = day?.let {
-                DayUi(it.number, it.date, bar.kind, it.prayers, it.checkin, entries.noteFor(it.date))
-            },
+            sheetDay = day?.toUi(bar.kind, entries, time.zone),
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeState())
 
@@ -75,9 +70,6 @@ class HomeViewModel(
             HomeAction.CloseSheet -> selected.value = null
         }
     }
-
-    private fun List<JournalEntry>.noteFor(date: LocalDate): String? =
-        filter { it.createdAt.toLocalDateTime(time.zone).date == date }.maxByOrNull { it.createdAt }?.note
 
     private companion object {
         val FALLBACK_ASR = LocalTime(15, 0)

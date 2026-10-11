@@ -68,3 +68,11 @@ class FakePrayerTimesRepository(times: Map<com.iqbalansyori.izzah.domain.model.P
     override fun timesFor(date: LocalDate) = timesFlow.value
     override suspend fun setLocation(p: com.iqbalansyori.izzah.domain.model.GeoPoint) = Unit
 }
+
+class FakeJedaRepository(events: List<com.iqbalansyori.izzah.domain.model.JedaEvent> = emptyList()) :
+    com.iqbalansyori.izzah.domain.repository.JedaRepository {
+    val eventsFlow = MutableStateFlow(events)
+    override fun observeEvents(): Flow<List<com.iqbalansyori.izzah.domain.model.JedaEvent>> = eventsFlow
+    override suspend fun start(): Long = 0
+    override suspend fun complete(id: Long) = Unit
+}

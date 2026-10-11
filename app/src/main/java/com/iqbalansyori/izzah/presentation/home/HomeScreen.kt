@@ -82,7 +82,7 @@ fun HomeScreen(state: HomeState, onAction: (HomeAction) -> Unit, nav: HomeNav) {
     }
 
     Column(
-        Modifier.fillMaxSize().background(IzzahColors.Bg).verticalScroll(rememberScrollState()).statusBarsPadding()
+        Modifier.fillMaxSize().background(IzzahColors.Bg).statusBarsPadding().verticalScroll(rememberScrollState())
             .padding(top = 28.dp, bottom = 120.dp),
         verticalArrangement = Arrangement.spacedBy(22.dp),
     ) {

@@ -24,6 +24,7 @@ import com.iqbalansyori.izzah.domain.repository.SettingsRepository
 import com.iqbalansyori.izzah.designsystem.component.TabDest
 import com.iqbalansyori.izzah.presentation.home.HomeNav
 import com.iqbalansyori.izzah.presentation.home.HomeRoot
+import com.iqbalansyori.izzah.presentation.progress.ProgressRoot
 import com.iqbalansyori.izzah.presentation.splash.SplashScreen
 import com.iqbalansyori.izzah.presentation.welcome.WelcomeScreen
 import com.iqbalansyori.izzah.presentation.unlock.UnlockRoot
@@ -105,6 +106,7 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
                             onMulaiLagi = { nav.navigate(MulaiLagiRoute) },
                         ),
                     )
+                    TabDest.PROGRESS -> ProgressRoot()
                     else -> Placeholder(tab.name)
                 }
             }
