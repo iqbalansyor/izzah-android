@@ -22,4 +22,7 @@ interface JedaDao {
 
     @Insert
     suspend fun insertAll(e: List<JedaEntity>)
+
+    @Query("DELETE FROM jeda_event")
+    suspend fun deleteAll()
 }

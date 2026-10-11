@@ -21,6 +21,9 @@ import androidx.navigation.toRoute
 import com.iqbalansyori.izzah.data.lock.AppLockManager
 import com.iqbalansyori.izzah.designsystem.theme.IzzahColors
 import com.iqbalansyori.izzah.domain.repository.SettingsRepository
+import com.iqbalansyori.izzah.designsystem.component.TabDest
+import com.iqbalansyori.izzah.presentation.home.HomeNav
+import com.iqbalansyori.izzah.presentation.home.HomeRoot
 import com.iqbalansyori.izzah.presentation.splash.SplashScreen
 import com.iqbalansyori.izzah.presentation.welcome.WelcomeScreen
 import com.iqbalansyori.izzah.presentation.unlock.UnlockRoot
@@ -89,7 +92,22 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
             )
         }
         composable<MainRoute> { e ->
-            MainScaffold(initialTab = e.toRoute<MainRoute>().tab, onJeda = { nav.navigate(JedaRoute) })
+            MainScaffold(initialTab = e.toRoute<MainRoute>().tab, onJeda = { nav.navigate(JedaRoute) }) { tab, selectTab ->
+                when (tab) {
+                    TabDest.HOME -> HomeRoot(
+                        HomeNav(
+                            onDzikir = { nav.navigate(DzikirRoute) },
+                            onSholat = { nav.navigate(SholatRoute) },
+                            onJurnal = { nav.navigate(JurnalRoute) },
+                            onDoa = { nav.navigate(DoaRoute) },
+                            onProgress = { selectTab(TabDest.PROGRESS) },
+                            onSettings = { selectTab(TabDest.SETTINGS) },
+                            onMulaiLagi = { nav.navigate(MulaiLagiRoute) },
+                        ),
+                    )
+                    else -> Placeholder(tab.name)
+                }
+            }
         }
         stub<SholatRoute>("Sholat")
         stub<DzikirRoute>("Dzikir")

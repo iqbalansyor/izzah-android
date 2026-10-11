@@ -20,12 +20,12 @@ import com.iqbalansyori.izzah.designsystem.theme.IzzahColors
 fun MainScaffold(
     initialTab: TabDest,
     onJeda: () -> Unit,
-    tabContent: @Composable (TabDest) -> Unit = { Text(it.name) },
+    tabContent: @Composable (TabDest, (TabDest) -> Unit) -> Unit = { tab, _ -> Text(tab.name) },
 ) {
     var tab by rememberSaveable { mutableStateOf(initialTab) }
     val holder = rememberSaveableStateHolder()
     Box(Modifier.fillMaxSize().background(IzzahColors.Bg)) {
-        holder.SaveableStateProvider(tab.name) { tabContent(tab) }
+        holder.SaveableStateProvider(tab.name) { tabContent(tab) { tab = it } }
         Box(Modifier.align(Alignment.BottomCenter)) { IzzahTabBar(tab, { tab = it }, onJeda) }
     }
 }

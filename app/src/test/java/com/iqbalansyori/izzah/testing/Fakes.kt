@@ -39,3 +39,32 @@ class FakeJournalDayStore(days: Set<LocalDate> = emptySet()) : JournalDayStore {
     private val state = MutableStateFlow(days)
     override fun observeDays(): Flow<Set<LocalDate>> = state
 }
+
+class FakeJourneyRepository(journey: com.iqbalansyori.izzah.domain.logic.Journey, today: DayLog = DayLog(LocalDate(2026, 10, 1))) :
+    com.iqbalansyori.izzah.domain.repository.JourneyRepository {
+    val journeyFlow = MutableStateFlow(journey)
+    val todayFlow = MutableStateFlow(today)
+    override fun observeJourney(): Flow<com.iqbalansyori.izzah.domain.logic.Journey> = journeyFlow
+    override fun observeToday(): Flow<DayLog> = todayFlow
+    override suspend fun togglePrayer(p: com.iqbalansyori.izzah.domain.model.Prayer) {
+        todayFlow.value = todayFlow.value.copy(prayers = todayFlow.value.prayers.let { if (p in it) it - p else it + p })
+    }
+    override suspend fun logSlip(triggers: Set<com.iqbalansyori.izzah.domain.model.Trigger>) {
+        todayFlow.value = todayFlow.value.copy(slip = true, triggers = todayFlow.value.triggers + triggers)
+    }
+}
+
+class FakeJournalRepository(entries: List<com.iqbalansyori.izzah.domain.model.JournalEntry> = emptyList()) :
+    com.iqbalansyori.izzah.domain.repository.JournalRepository {
+    val entriesFlow = MutableStateFlow(entries)
+    override fun observeEntries(): Flow<List<com.iqbalansyori.izzah.domain.model.JournalEntry>> = entriesFlow
+    override suspend fun add(mood: com.iqbalansyori.izzah.domain.model.Mood?, note: String) = Unit
+}
+
+class FakePrayerTimesRepository(times: Map<com.iqbalansyori.izzah.domain.model.Prayer, kotlinx.datetime.LocalTime>? = null) :
+    com.iqbalansyori.izzah.domain.repository.PrayerTimesRepository {
+    val timesFlow = MutableStateFlow(times)
+    override fun observeToday(): Flow<Map<com.iqbalansyori.izzah.domain.model.Prayer, kotlinx.datetime.LocalTime>?> = timesFlow
+    override fun timesFor(date: LocalDate) = timesFlow.value
+    override suspend fun setLocation(p: com.iqbalansyori.izzah.domain.model.GeoPoint) = Unit
+}

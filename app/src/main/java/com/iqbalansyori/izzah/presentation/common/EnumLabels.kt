@@ -2,6 +2,7 @@ package com.iqbalansyori.izzah.presentation.common
 
 import androidx.annotation.StringRes
 import com.iqbalansyori.izzah.R
+import com.iqbalansyori.izzah.domain.model.Prayer
 import com.iqbalansyori.izzah.domain.model.Rawan
 import com.iqbalansyori.izzah.domain.model.Why
 
@@ -25,4 +26,14 @@ val Rawan.label: Int
         Rawan.AFTER_SOCIAL -> R.string.rawan_opt_social
         Rawan.STRESS -> R.string.rawan_opt_stress
         Rawan.WEEKEND -> R.string.rawan_opt_weekend
+    }
+
+@get:StringRes
+val Prayer.label: Int
+    get() = when (this) {
+        Prayer.FAJR -> R.string.prayer_fajr
+        Prayer.DHUHR -> R.string.prayer_dhuhr
+        Prayer.ASR -> R.string.prayer_asr
+        Prayer.MAGHRIB -> R.string.prayer_maghrib
+        Prayer.ISHA -> R.string.prayer_isha
     }

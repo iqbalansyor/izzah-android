@@ -22,4 +22,7 @@ interface JournalDao {
 
     @Insert
     suspend fun insertAll(e: List<JournalEntity>)
+
+    @Query("DELETE FROM journal_entry")
+    suspend fun deleteAll()
 }
