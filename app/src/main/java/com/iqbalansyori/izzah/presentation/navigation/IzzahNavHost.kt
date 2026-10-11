@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -22,6 +23,8 @@ import com.iqbalansyori.izzah.designsystem.theme.IzzahColors
 import com.iqbalansyori.izzah.domain.repository.SettingsRepository
 import com.iqbalansyori.izzah.presentation.splash.SplashScreen
 import com.iqbalansyori.izzah.presentation.welcome.WelcomeScreen
+import com.iqbalansyori.izzah.presentation.unlock.UnlockRoot
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
@@ -34,6 +37,7 @@ private inline fun <reified T : Any> NavGraphBuilder.stub(name: String) = compos
 @Composable
 fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
     val nav = rememberNavController()
+    val scope = rememberCoroutineScope()
     val lock = koinInject<AppLockManager>()
     val settings = koinInject<SettingsRepository>()
     val locked by lock.locked.collectAsStateWithLifecycle()
@@ -67,7 +71,23 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
         composable<WelcomeRoute> { WelcomeScreen(onStart = { nav.navigate(OnboardingGraph) }, onPin = { nav.navigate(RestoreRoute) }) }
         stub<RestoreRoute>("Restore")
         onboardingGraph(nav, lock)
-        stub<UnlockRoute>("Unlock")
+        composable<UnlockRoute> {
+            UnlockRoot(
+                onUnlocked = {
+                    // a successful unlock returns to where the user was; on a cold start there is nothing below Unlock
+                    if (nav.previousBackStackEntry != null) nav.popBackStack()
+                    else nav.navigate(MainRoute()) { popUpTo<UnlockRoute> { inclusive = true } }
+                },
+                onRestore = { nav.navigate(RestoreRoute) },
+                onWipe = {
+                    // Task 27 replaces this with DataWiper.wipeAll(); clearing settings now keeps the lock guard from bouncing back
+                    scope.launch {
+                        settings.clear()
+                        nav.navigate(WelcomeRoute) { popUpTo(nav.graph.id) { inclusive = true } }
+                    }
+                },
+            )
+        }
         composable<MainRoute> { e ->
             MainScaffold(initialTab = e.toRoute<MainRoute>().tab, onJeda = { nav.navigate(JedaRoute) })
         }
