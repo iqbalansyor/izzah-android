@@ -11,6 +11,7 @@
     <string name="welcome_footnote">Anonymous. No email, no phone number.</string>
     <string name="common_continue">Continue</string>
     <string name="common_back_cd">Back</string>
+    <string name="pin_delete_cd">Delete</string>
     <string name="onboarding_progress">%1$d/6</string>
     <string name="niat_title">What makes you want to change?</string>
     <string name="niat_subtitle">Pick what\'s closest to your heart. We\'ll remind you of it when you feel shaky.</string>
