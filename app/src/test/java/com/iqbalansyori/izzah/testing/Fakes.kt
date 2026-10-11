@@ -58,7 +58,10 @@ class FakeJournalRepository(entries: List<com.iqbalansyori.izzah.domain.model.Jo
     com.iqbalansyori.izzah.domain.repository.JournalRepository {
     val entriesFlow = MutableStateFlow(entries)
     override fun observeEntries(): Flow<List<com.iqbalansyori.izzah.domain.model.JournalEntry>> = entriesFlow
-    override suspend fun add(mood: com.iqbalansyori.izzah.domain.model.Mood?, note: String) = Unit
+    override suspend fun add(mood: com.iqbalansyori.izzah.domain.model.Mood?, note: String) {
+        val id = (entriesFlow.value.maxOfOrNull { it.id } ?: 0L) + 1
+        entriesFlow.value = entriesFlow.value + com.iqbalansyori.izzah.domain.model.JournalEntry(id, Instant.fromEpochMilliseconds(id * 1000), mood, note)
+    }
 }
 
 class FakePrayerTimesRepository(times: Map<com.iqbalansyori.izzah.domain.model.Prayer, kotlinx.datetime.LocalTime>? = null) :

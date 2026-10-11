@@ -2,6 +2,7 @@ package com.iqbalansyori.izzah.presentation.common
 
 import androidx.annotation.StringRes
 import com.iqbalansyori.izzah.R
+import com.iqbalansyori.izzah.domain.model.Mood
 import com.iqbalansyori.izzah.domain.model.Prayer
 import com.iqbalansyori.izzah.domain.model.Rawan
 import com.iqbalansyori.izzah.domain.model.Why
@@ -36,4 +37,13 @@ val Prayer.label: Int
         Prayer.ASR -> R.string.prayer_asr
         Prayer.MAGHRIB -> R.string.prayer_maghrib
         Prayer.ISHA -> R.string.prayer_isha
+    }
+
+@get:StringRes
+val Mood.label: Int
+    get() = when (this) {
+        Mood.STRONG -> R.string.mood_strong
+        Mood.OKAY -> R.string.mood_okay
+        Mood.SHAKY -> R.string.mood_shaky
+        Mood.HEAVY -> R.string.mood_heavy
     }
