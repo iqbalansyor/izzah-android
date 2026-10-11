@@ -9,6 +9,7 @@ import javax.crypto.spec.SecretKeySpec
 sealed class BackupError : Exception() {
     data object NotABackup : BackupError()
     data object WrongPin : BackupError()
+    data object Unsupported : BackupError()
 }
 
 object BackupCrypto {

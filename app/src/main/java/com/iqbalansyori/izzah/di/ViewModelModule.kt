@@ -6,7 +6,9 @@ import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
 import com.iqbalansyori.izzah.data.prayer.CityCatalog
 import com.iqbalansyori.izzah.presentation.dzikir.DzikirViewModel
+import com.iqbalansyori.izzah.presentation.data.DataViewModel
 import com.iqbalansyori.izzah.presentation.home.HomeViewModel
+import com.iqbalansyori.izzah.presentation.restore.RestoreViewModel
 import com.iqbalansyori.izzah.presentation.jeda.JedaViewModel
 import com.iqbalansyori.izzah.presentation.jurnal.JurnalViewModel
 import com.iqbalansyori.izzah.presentation.mulai.MulaiViewModel
@@ -30,6 +32,8 @@ val viewModelModule = module {
     viewModel { DzikirViewModel() }
     viewModel { JurnalViewModel(get()) }
     viewModel { MulaiViewModel(get()) }
+    viewModel { DataViewModel(get(), get(), get()) }
+    viewModel { RestoreViewModel(get(), get()) }
     viewModel { SettingsViewModel(get(), get(), BuildConfig.VERSION_NAME, { get<BiometricChecker>().isAvailable() }, { get<DisguiseManager>().apply(it) }) }
     viewModel { SholatViewModel(get(), get(), get(), get<CityCatalog>().cities, get()) }
     viewModel {

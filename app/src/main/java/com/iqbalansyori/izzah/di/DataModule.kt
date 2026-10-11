@@ -5,7 +5,16 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.iqbalansyori.izzah.data.DataWiper
+import com.iqbalansyori.izzah.data.NoopBlockingController
+import com.iqbalansyori.izzah.data.NoopReminderScheduler
+import com.iqbalansyori.izzah.data.backup.BackupRepositoryImpl
+import com.iqbalansyori.izzah.data.backup.BackupStore
+import com.iqbalansyori.izzah.data.backup.DbBackupStore
 import com.iqbalansyori.izzah.data.db.IzzahDatabase
+import com.iqbalansyori.izzah.domain.repository.BackupRepository
+import com.iqbalansyori.izzah.domain.repository.BlockingController
+import com.iqbalansyori.izzah.domain.repository.ReminderScheduler
 import com.iqbalansyori.izzah.data.locale.LocaleFormats
 import com.iqbalansyori.izzah.data.prayer.CityCatalog
 import com.iqbalansyori.izzah.data.prayer.LocationProvider
@@ -39,6 +48,11 @@ val dataModule = module {
     single { get<IzzahDatabase>().journal() }
     single { get<IzzahDatabase>().jeda() }
 
+    single<BackupStore> { DbBackupStore(get()) }
+    single<BackupRepository> { BackupRepositoryImpl(get(), get()) }
+    single<ReminderScheduler> { NoopReminderScheduler }
+    single<BlockingController> { NoopBlockingController }
+    single { DataWiper(androidContext(), get(), get(), get(), get(), get(), get()) }
     single<SettingsRepository> { SettingsRepositoryImpl(androidContext().settingsStore) }
     single<DayLogStore> { DayLogStoreImpl(get()) }
     single { JournalRepositoryImpl(get(), get()) } binds arrayOf(JournalRepository::class, JournalDayStore::class)

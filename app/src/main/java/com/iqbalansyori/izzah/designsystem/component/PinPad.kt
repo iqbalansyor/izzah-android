@@ -62,7 +62,7 @@ fun PinPad(onDigit: (Char) -> Unit, onDelete: () -> Unit) {
         Row(horizontalArrangement = Arrangement.spacedBy(28.dp)) {
             Box(Modifier.size(76.dp))
             Key({ onDigit('0') }) { Text("0", style = IzzahType.outfit(30.sp, FontWeight.Medium)) }
-            Key(onDelete) { Icon(IzzahGlyphs.Close, stringResource(R.string.pin_delete_cd), Modifier.size(26.dp), tint = IzzahColors.Text) }
+            Key(onDelete) { Icon(IzzahGlyphs.Close, stringResource(R.string.keypad_delete_cd), Modifier.size(26.dp), tint = IzzahColors.Text) }
         }
     }
 }

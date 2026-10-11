@@ -26,4 +26,7 @@ interface DayLogDao {
 
     @Insert
     suspend fun insertAll(e: List<DayLogEntity>)
+
+    @Query("DELETE FROM day_log")
+    suspend fun deleteAll()
 }

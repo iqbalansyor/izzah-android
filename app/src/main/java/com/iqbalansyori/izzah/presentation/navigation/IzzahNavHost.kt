@@ -18,10 +18,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.iqbalansyori.izzah.data.DataWiper
 import com.iqbalansyori.izzah.data.lock.AppLockManager
 import com.iqbalansyori.izzah.designsystem.theme.IzzahColors
 import com.iqbalansyori.izzah.domain.repository.SettingsRepository
 import com.iqbalansyori.izzah.designsystem.component.TabDest
+import com.iqbalansyori.izzah.presentation.data.DataRoot
 import com.iqbalansyori.izzah.presentation.doa.DoaScreen
 import com.iqbalansyori.izzah.presentation.dzikir.DzikirRoot
 import com.iqbalansyori.izzah.presentation.home.HomeNav
@@ -30,6 +32,7 @@ import com.iqbalansyori.izzah.presentation.jeda.JedaRoot
 import com.iqbalansyori.izzah.presentation.jurnal.JurnalRoot
 import com.iqbalansyori.izzah.presentation.mulai.MulaiRoot
 import com.iqbalansyori.izzah.presentation.progress.ProgressRoot
+import com.iqbalansyori.izzah.presentation.restore.RestoreRoot
 import com.iqbalansyori.izzah.presentation.settings.DisguiseRoot
 import com.iqbalansyori.izzah.presentation.settings.LanguageRoot
 import com.iqbalansyori.izzah.presentation.settings.RemindersRoot
@@ -56,6 +59,7 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
     val scope = rememberCoroutineScope()
     val lock = koinInject<AppLockManager>()
     val settings = koinInject<SettingsRepository>()
+    val wiper = koinInject<DataWiper>()
     val locked by lock.locked.collectAsStateWithLifecycle()
     val s by settings.settings.collectAsStateWithLifecycle(initialValue = null)
     val entry by nav.currentBackStackEntryAsState()
@@ -85,7 +89,12 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
             })
         }
         composable<WelcomeRoute> { WelcomeScreen(onStart = { nav.navigate(OnboardingGraph) }, onPin = { nav.navigate(RestoreRoute) }) }
-        stub<RestoreRoute>("Restore")
+        composable<RestoreRoute> {
+            RestoreRoot(
+                onBack = { nav.popBackStack() },
+                onRestored = { nav.navigate(MainRoute()) { popUpTo(nav.graph.id) { inclusive = true } } },
+            )
+        }
         onboardingGraph(nav, lock)
         composable<UnlockRoute> {
             UnlockRoot(
@@ -95,13 +104,7 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
                     else nav.navigate(MainRoute()) { popUpTo<UnlockRoute> { inclusive = true } }
                 },
                 onRestore = { nav.navigate(RestoreRoute) },
-                onWipe = {
-                    // Task 27 replaces this with DataWiper.wipeAll(); clearing settings now keeps the lock guard from bouncing back
-                    scope.launch {
-                        settings.clear()
-                        nav.navigate(WelcomeRoute) { popUpTo(nav.graph.id) { inclusive = true } }
-                    }
-                },
+                onWipe = { scope.launch { wiper.wipeAll() } },
             )
         }
         composable<MainRoute> { e ->
@@ -139,7 +142,7 @@ fun IzzahNavHost(deepLink: String?, onDeepLinkHandled: () -> Unit = {}) {
         composable<DoaRoute> { DoaScreen(onBack = { nav.popBackStack() }) }
         composable<JurnalRoute> { JurnalRoot(onBack = { nav.popBackStack() }) }
         composable<DisguiseRoute> { DisguiseRoot(onBack = { nav.popBackStack() }) }
-        stub<DataRoute>("Data")
+        composable<DataRoute> { DataRoot(onBack = { nav.popBackStack() }) }
         composable<LanguageRoute> { LanguageRoot(onBack = { nav.popBackStack() }) }
         composable<TargetEditRoute> { TargetEditRoot(onBack = { nav.popBackStack() }) }
         composable<RemindersRoute> { RemindersRoot(onBack = { nav.popBackStack() }) }

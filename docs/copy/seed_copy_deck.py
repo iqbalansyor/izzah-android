@@ -24,7 +24,6 @@ s("welcome_footnote", "Welcome", "Anonim. Tanpa email, tanpa nomor HP.", "Anonym
 # 02 Onboarding
 s("common_continue", "Onboarding (all)", "Lanjut", "Continue")
 s("common_back_cd", "All pushed screens", "Kembali", "Back", "Content description for the ← button (accessibility).", "NEW")
-s("pin_delete_cd", "PIN pad", "Hapus", "Delete", "Content description for the backspace key on the PIN pad (accessibility).", "NEW")
 s("onboarding_progress", "Onboarding (all)", "{step}/6", "{step}/6", "Placeholder only.")
 s("niat_title", "1 · Niat", "Apa yang membuatmu ingin berubah?", "What makes you want to change?")
 s("niat_subtitle", "1 · Niat", "Pilih yang paling dekat di hati. Ini akan kami ingatkan saat kamu goyah.", "Pick what's closest to your heart. We'll remind you of it when you feel shaky.")
