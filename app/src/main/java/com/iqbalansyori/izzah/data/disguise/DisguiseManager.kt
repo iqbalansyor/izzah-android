@@ -6,7 +6,11 @@ import android.content.pm.PackageManager
 import com.iqbalansyori.izzah.domain.model.Disguise
 
 class DisguiseManager(private val context: Context) {
-    private fun alias(d: Disguise) = ComponentName(context, "${context.packageName}.Launcher${d.name.lowercase().replaceFirstChar { it.uppercase() }}")
+    // alias classes live in the namespace, which differs from packageName on builds with an applicationId suffix
+    private fun alias(d: Disguise) = ComponentName(
+        context.packageName,
+        "com.iqbalansyori.izzah.Launcher${d.name.lowercase().replaceFirstChar { it.uppercase() }}",
+    )
 
     fun apply(d: Disguise) {
         val pm = context.packageManager
