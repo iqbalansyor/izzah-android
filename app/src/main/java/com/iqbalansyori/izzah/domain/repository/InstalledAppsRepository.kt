@@ -11,7 +11,15 @@ interface InstalledAppsRepository {
 }
 
 val SUGGESTED_PACKAGES = listOf(
-    "com.android.chrome", "org.mozilla.firefox", "com.sec.android.app.sbrowser", "com.opera.browser", "com.instagram.android",
-    "com.twitter.android", "com.zhiliaoapp.musically", "com.ss.android.ugc.trill", "org.telegram.messenger", "com.google.android.youtube",
-    "com.reddit.frontpage",
+    "com.instagram.android", "com.instagram.lite", "com.instagram.barcelona",
+    "com.facebook.katana", "com.facebook.lite",
+    "com.google.android.youtube",
+    "com.zhiliaoapp.musically", "com.zhiliaoapp.musically.go", "com.ss.android.ugc.trill",
+    "com.twitter.android", "com.twitter.android.lite",
+    "com.snapchat.android", "com.reddit.frontpage", "com.pinterest", "com.tumblr",
+    "org.telegram.messenger", "org.telegram.messenger.web",
+    "video.like", "com.kwai.video", "com.kwai.bulldog", "sg.bigo.live", "tv.twitch.android.app",
+    "com.vidio.android", "com.netflix.mediaclient",
+    "com.android.chrome", "org.mozilla.firefox", "com.sec.android.app.sbrowser", "com.opera.browser", "com.opera.mini.native",
+    "com.brave.browser", "com.microsoft.emmx", "com.UCMobile.intl", "mark.via.gp",
 )

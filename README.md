@@ -11,7 +11,7 @@ An anonymous Android companion for guarding yourself from porn, one day at a tim
 ```bash
 export JAVA_HOME=$(/usr/libexec/java_home -v 17)
 ./gradlew :app:assembleDebug
-./gradlew :app:testDebugUnitTest                      # 136 unit tests
+./gradlew :app:testDebugUnitTest                      # 138 unit tests
 ./gradlew :app:connectedDebugAndroidTest              # 4 instrumented tests, needs a device or emulator
 ```
 
